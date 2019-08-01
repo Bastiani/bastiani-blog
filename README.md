@@ -7,7 +7,7 @@ This is my personal project for my blog, feel free for contributor or use.
 NextJS with relay and mongodb.
 
 For generate modules use my CLI [graphql-scripts](https://github.com/Bastiani/graphql-scripts)
-[](https://github.com/Bastiani/bastiani-blog/blob/master/graphql-cli.png)
+![](https://github.com/Bastiani/bastiani-blog/blob/master/graphql-cli.png)
 
 ### How to use:
 
