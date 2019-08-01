@@ -1,0 +1,205 @@
+type Mutation {
+  UserLoginMutation(input: UserLoginInput!): UserLoginPayload
+  UserAddMutation(input: UserAddInput!): UserAddPayload
+  PostAddMutation(input: PostAddInput!): PostAddPayload
+  PostEditMutation(input: PostEditInput!): PostEditPayload
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+# Information about pagination in a connection.
+type PageInfoExtended {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+# Post type definition
+type Post implements Node {
+  # The ID of an object
+  id: ID!
+  _id: String
+
+  # Title of the post
+  title: String
+
+  # Text of the post
+  text: String
+
+  # User of the post
+  user: String
+
+  # Active of the post
+  active: Boolean
+}
+
+input PostAddInput {
+  title: String!
+  text: String!
+  active: Boolean
+  clientMutationId: String
+}
+
+type PostAddPayload {
+  postEdge: PostEdge
+  error: String
+  clientMutationId: String
+}
+
+# A connection to a list of items.
+type PostConnection {
+  # Number of items in this connection
+  count: Int!
+
+  # A count of the total number of objects in this connection, ignoring pagination.
+  #   This allows a client to fetch the first five objects by passing "5" as the
+  #   argument to "first", then fetch the total count so it could display "5 of 83",
+  #   for example.
+  totalCount: Int!
+
+  # Offset from start
+  startCursorOffset: Int!
+
+  # Offset till end
+  endCursorOffset: Int!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfoExtended!
+
+  # A list of edges.
+  edges: [PostEdge]!
+}
+
+# An edge in a connection.
+type PostEdge {
+  # The item at the end of the edge
+  node: Post
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+input PostEditInput {
+  id: ID!
+  title: String!
+  text: String!
+  active: Boolean
+  clientMutationId: String
+}
+
+type PostEditPayload {
+  post: Post
+  error: String
+  clientMutationId: String
+}
+
+# The root of all... queries
+type Query {
+  # Fetches an object given its ID
+  node(
+    # The ID of an object
+    id: ID!
+  ): Node
+
+  # Me is the logged user
+  me: User
+  users(after: String, first: Int, before: String, last: Int, search: String): UserConnection!
+
+  # Post by id
+  post(id: ID!): Post
+  posts(after: String, first: Int, before: String, last: Int, search: String): PostConnection
+}
+
+# User type definition
+type User implements Node {
+  # The ID of an object
+  id: ID!
+  _id: String
+
+  # Name of the user
+  name: String
+
+  # Password of the user
+  password: String
+
+  # Email of the user
+  email: String
+
+  # Active of the user
+  active: Boolean
+
+  # isAdmin of the user
+  isAdmin: Boolean
+}
+
+input UserAddInput {
+  name: String!
+  password: String
+  email: String!
+  active: Boolean
+  clientMutationId: String
+}
+
+type UserAddPayload {
+  user: User
+  error: String
+  clientMutationId: String
+}
+
+# A connection to a list of items.
+type UserConnection {
+  # Number of items in this connection
+  count: Int!
+
+  # A count of the total number of objects in this connection, ignoring pagination.
+  #   This allows a client to fetch the first five objects by passing "5" as the
+  #   argument to "first", then fetch the total count so it could display "5 of 83",
+  #   for example.
+  totalCount: Int!
+
+  # Offset from start
+  startCursorOffset: Int!
+
+  # Offset till end
+  endCursorOffset: Int!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfoExtended!
+
+  # A list of edges.
+  edges: [UserEdge]!
+}
+
+# An edge in a connection.
+type UserEdge {
+  # The item at the end of the edge
+  node: User!
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+input UserLoginInput {
+  email: String!
+  password: String!
+  clientMutationId: String
+}
+
+type UserLoginPayload {
+  token: String
+  error: String
+  clientMutationId: String
+}
+
