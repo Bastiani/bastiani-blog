@@ -1,7 +1,7 @@
 import { createRefetchContainer, graphql } from 'react-relay';
 import styled from 'styled-components';
 
-import withData from '../relay/withData';
+import withData from '../lib/withData';
 
 const Title = styled.li`
   color: #007EA7;
