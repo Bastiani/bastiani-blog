@@ -23,6 +23,9 @@ const mutation = mutationWithClientMutationId({
     },
   },
   mutateAndGetPayload: async (args, context: IGraphQLContext) => {
+    const { user } = context;
+    if (!user) { throw new Error('Unauthorized user'); }
+
     const { id, title, text, active } = args;
 
     const post = await PostModel.findOne({

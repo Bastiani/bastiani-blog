@@ -59,6 +59,7 @@
     "@types/react-relay": "^5.0.0",
     "@types/styled-components": "^4.1.18",
     "babel-plugin-relay": "^5.0.0",
+    "babel-plugin-styled-components": "^1.10.6",
     "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
