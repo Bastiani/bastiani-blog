@@ -37,8 +37,8 @@
     "build": "next build && tsc --project tsconfig.server.json",
     "start": "cross-env NODE_ENV=production node dist/index.js",
     "prestart": "npm run build",
-    "relay": "./node_modules/.bin/relay-compiler --src ./pages --schema pages/schema.graphql --language typescript --artifactDirectory ./pages/__generated__",
-    "update-schema": "get-graphql-schema http://localhost:3000/graphql > pages/schema.graphql"
+    "relay": "./node_modules/.bin/relay-compiler --src ./components --schema schema/schema.graphql --language typescript --artifactDirectory ./components/__generated__",
+    "update-schema": "get-graphql-schema http://localhost:3000/graphql > schema/schema.graphql"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

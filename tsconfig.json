@@ -26,7 +26,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "relay/createQueryRenderer.js",
-    "relay/withData.js"
+    "lib/createQueryRenderer.js",
+    "lib/withData.js",
+    "components/ListPosts.js"
   ]
 }

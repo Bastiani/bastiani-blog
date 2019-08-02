@@ -3,3 +3,4 @@ schema/schema.graphql
 node_modules/
 .env
 .next/
+dist/
