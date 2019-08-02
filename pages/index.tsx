@@ -1,21 +1,20 @@
-import Head from 'next/head';
 import { createRefetchContainer, graphql } from 'react-relay';
+import styled from 'styled-components';
 
-// import createQueryRenderer from '../relay/createQueryRenderer';
 import withData from '../relay/withData';
+
+const Title = styled.li`
+  color: #007EA7;
+`;
 
 // @ts-ignore
 function Index({ query }) {
   return (
     <div>
-      <Head>
-        <title>Bastiani Blog</title>
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-      </Head>
       <ul>
         {query && query.posts && (
           // @ts-ignore
-          query.posts.edges.map(({ node }) => <li key={node.id}>Title: {node.title}</li>)
+          query.posts.edges.map(({ node }) => <Title key={node.id}>Title: {node.title}</Title>)
         )}
       </ul>
     </div>
