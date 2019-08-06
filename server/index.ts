@@ -66,12 +66,14 @@ app.prepare().then(() => {
   });
 
   router.all('/graphql', graphqlServer);
-  router.all(
-    '/playground',
-    koaPlayground({
-      endpoint: '/graphql',
-    }),
-  );
+  if (process.env.NODE_ENV !== 'production') {
+    router.all(
+      '/playground',
+      koaPlayground({
+        endpoint: '/graphql',
+      }),
+    );
+  }
 
   server.use(async (ctx, next) => {
     ctx.res.statusCode = 200;

@@ -23,6 +23,7 @@ const mutation = mutationWithClientMutationId({
     },
   },
   mutateAndGetPayload: async (args) => {
+    if (process.env.NODE_ENV === 'production') { throw new Error('Not user add allowed!'); }
     const { name, password, email, active } = args;
 
     const newUser = await new User({
