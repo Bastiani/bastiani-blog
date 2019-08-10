@@ -5,7 +5,7 @@ export default class MyDocument extends Document {
   public static getInitialProps({ renderPage }: any) {
     const sheet = new ServerStyleSheet();
     const page = renderPage((App: any) => (props: any) =>
-      sheet.collectStyles(<App {...props} />),
+      sheet.collectStyles(<App {...props} />)
     );
     const styleTags = sheet.getStyleElement();
     return { ...page, styleTags };
@@ -15,8 +15,10 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <title>Bastiani Blog</title>
-          <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
           {/*
           // @ts-ignore */}
           {this.props.styleTags}

@@ -48,15 +48,21 @@ const InputFormik = ({
     switch (counterMatchedCase) {
       case 3:
         setPasswordStronger(50);
-        if (strongerlevel) { strongerlevel(50); }
+        if (strongerlevel) {
+          strongerlevel(50);
+        }
         break;
       case 4:
         setPasswordStronger(99.9);
-        if (strongerlevel) { strongerlevel(99.9); }
+        if (strongerlevel) {
+          strongerlevel(99.9);
+        }
         break;
       default:
         setPasswordStronger(30);
-        if (strongerlevel) { strongerlevel(30); }
+        if (strongerlevel) {
+          strongerlevel(30);
+        }
         break;
     }
   };
@@ -64,7 +70,9 @@ const InputFormik = ({
   const handleChange = (event: any) => {
     const { value } = event.target;
 
-    if (type === 'password' && checkPassword) { handleValidatePassword(value); }
+    if (type === 'password' && checkPassword) {
+      handleValidatePassword(value);
+    }
 
     formik.setFieldValue(name, value);
   };

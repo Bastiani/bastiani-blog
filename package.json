@@ -63,6 +63,7 @@
     "@types/react-dom": "^16.8.5",
     "@types/react-native-dotenv": "^0.2.0",
     "@types/react-relay": "^5.0.0",
+    "@types/relay-runtime": "^5.0.3",
     "@types/styled-components": "^4.1.18",
     "@types/yup": "^0.26.22",
     "babel-plugin-relay": "^5.0.0",
@@ -76,11 +77,13 @@
     "eslint-plugin-react": "^7.14.3",
     "graphql-cli": "^3.0.12",
     "nodemon": "^1.19.1",
-    "prettier-eslint": "^9.0.0",
+    "prettier": "^1.18.2",
+    "prettier-tslint": "^0.4.2",
     "relay-compiler": "^5.0.0",
     "relay-compiler-language-typescript": "^4.3.0",
     "ts-node": "^8.3.0",
     "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.5.3"
   }
 }

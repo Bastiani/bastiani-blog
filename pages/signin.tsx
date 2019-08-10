@@ -10,16 +10,14 @@ const validationSchema = () =>
       .string()
       .email('Invalid email!')
       .required('Email required!'),
-    password: yup
-      .string()
-      .required('Password is required'),
+    password: yup.string().required('Password is required')
   });
 
 const Signin = () => (
   <Formik
     initialValues={{
       email: '',
-      password: '',
+      password: ''
     }}
     validationSchema={validationSchema()}
     onSubmit={(values, actions) => {
@@ -29,22 +27,20 @@ const Signin = () => (
     }}
     render={({ handleSubmit }) => (
       <>
-      <FormGroup>
-        <InputFormik
-          label='Email'
-          name='email'
-          placeholder='Email'
-        />
-        <InputFormik
-          label='Password'
-          name='password'
-          placeholder='Password'
-        />
-      </FormGroup>
-      <Button variant='success' htmlType='submit' onClick={handleSubmit}>Login</Button>
+        <FormGroup>
+          <InputFormik label="Email" name="email" placeholder="Email" />
+          <InputFormik
+            label="Password"
+            name="password"
+            placeholder="Password"
+          />
+        </FormGroup>
+        <Button variant="success" htmlType="submit" onClick={handleSubmit}>
+          Login
+        </Button>
       </>
     )}
-    />
+  />
 );
 
 export default Signin;
