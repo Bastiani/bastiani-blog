@@ -8,6 +8,7 @@ import convert from 'koa-convert';
 import { print } from 'graphql/language';
 import koaPlayground from 'graphql-playground-middleware-koa';
 import { GraphQLError } from 'graphql';
+
 import schema from './schema';
 import * as loaders from './graphql/loader';
 import { getUser, getDataloaders } from './helper';
@@ -29,12 +30,10 @@ const graphqlSettingsPerReq = async (req: Request): Promise<OptionsData> => {
     context: {
       user,
       req,
-      dataloaders,
+      dataloaders
     },
     // @ts-ignore
-    extensions: ({
-      document, variables, operationName, result,
-    }): void => {
+    extensions: ({ document, variables, operationName, result }): void => {
       // @ts-ignore
       console.log(print(document));
       console.log(variables);
@@ -48,9 +47,9 @@ const graphqlSettingsPerReq = async (req: Request): Promise<OptionsData> => {
       return {
         message: error.message,
         locations: error.locations,
-        stack: error.stack,
+        stack: error.stack
       };
-    },
+    }
   };
 };
 
@@ -60,18 +59,34 @@ app.prepare().then(() => {
   const server = new Koa();
   const router = new Router();
 
-  router.get('/', async (ctx) => {
+  router.get('/', async ctx => {
+    await handle(ctx.req, ctx.res);
+    ctx.respond = false;
+  });
+
+  router.get('/admin', async ctx => {
+    await handle(ctx.req, ctx.res);
+    ctx.respond = false;
+  });
+
+  router.get('/signin', async ctx => {
+    await handle(ctx.req, ctx.res);
+    ctx.respond = false;
+  });
+
+  router.get('*', async ctx => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;
   });
 
   router.all('/graphql', graphqlServer);
+
   if (process.env.NODE_ENV !== 'production') {
     router.all(
       '/playground',
       koaPlayground({
-        endpoint: '/graphql',
-      }),
+        endpoint: '/graphql'
+      })
     );
   }
 

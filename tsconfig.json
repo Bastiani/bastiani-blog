@@ -21,13 +21,12 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
-  "exclude": ["dist", ".next", "out", "next.config.js"],
+  "exclude": ["dist", ".next", "out", "next.config.js", "node_modules"],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "lib/createQueryRenderer.js",
-    "lib/withData.js",
-    "components/ListPosts.js"
+    "lib/withData.js"
   ]
 }

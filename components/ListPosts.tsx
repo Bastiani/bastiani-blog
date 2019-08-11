@@ -4,25 +4,27 @@ import styled from 'styled-components';
 import withData from '../lib/withData';
 
 const Title = styled.li`
-  color: #007EA7;
+  color: #007ea7;
 `;
 
 // @ts-ignore
-function Index({ query }) {
+function ListPosts({ query }) {
   return (
-    <div>
+    <>
       <ul>
-        {query && query.posts && (
+        {query &&
+          query.posts &&
           // @ts-ignore
-          query.posts.edges.map(({ node }) => <Title key={node.id}>Title: {node.title}</Title>)
-        )}
+          query.posts.edges.map(({ node }) => (
+            <Title key={node.id}>Title: {node.title}</Title>
+          ))}
       </ul>
-    </div>
+    </>
   );
 }
 
-const IndexRefetchContainer = createRefetchContainer(
-  Index,
+const ListPostsRefetchContainer = createRefetchContainer(
+  ListPosts,
   {
     query: graphql`
       fragment ListPosts_query on Query
@@ -31,7 +33,7 @@ const IndexRefetchContainer = createRefetchContainer(
           first: { type: Int }
         ) {
         posts(first: $first, search: $search)
-          @connection(key: "Index_posts", filters: []) {
+          @connection(key: "ListPosts_posts", filters: []) {
           pageInfo {
             hasNextPage
             endCursor
@@ -45,16 +47,16 @@ const IndexRefetchContainer = createRefetchContainer(
           }
         }
       }
-    `,
+    `
   },
   graphql`
     query ListPosts_refetchQuery($first: Int, $search: String) {
       ...ListPosts_query @arguments(first: $first, search: $search)
     }
-  `,
+  `
 );
 
-export default withData(IndexRefetchContainer, {
+export default withData(ListPostsRefetchContainer, {
   query: graphql`
     query ListPostsQuery($first: Int, $search: String) {
       ...ListPosts_query @arguments(first: $first, search: $search)
@@ -62,6 +64,6 @@ export default withData(IndexRefetchContainer, {
   `,
   variables: {
     first: 10,
-    search: '',
-  },
+    search: ''
+  }
 });
