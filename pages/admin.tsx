@@ -1,16 +1,3 @@
-import { Button } from '@smooth-ui/core-sc';
-import React from 'react';
-
-const Admin = () => {
-  // const [ collapsed, setCollapsed ] = useState(false);
-
-  // const toggle = () => setCollapsed(!collapsed);
-
-  return (
-    <>
-      <Button>OK</Button>
-    </>
-  );
-};
+import Admin from '../components/pages/Admin';
 
 export default Admin;

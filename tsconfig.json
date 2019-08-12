@@ -27,6 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     "lib/createQueryRenderer.js",
-    "lib/withData.js"
+    "lib/withData.js",
+    "components/pages/security/auth.js"
   ]
 }

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-
 import get from 'lodash/get';
-
 import { Input, Label } from '@smooth-ui/core-sc';
 import { connect } from 'formik';
+
+import { Error, InputContainer } from '../../styles/input/input';
 
 interface IInputFormik {
   name: string;
@@ -26,7 +26,6 @@ const InputFormik = ({
   ...props
 }: IInputFormik) => {
   const [passwordStronger, setPasswordStronger] = useState(0);
-  console.log(passwordStronger);
 
   const handleValidatePassword = (password: string) => {
     const matchedCase = ['[$@$!%*#?&]', '[A-Z]', '[0-9]', '[a-z]'];
@@ -83,8 +82,8 @@ const InputFormik = ({
   const fieldError = wasTouched && get(errors, name, null);
 
   return (
-    <Label name={name}>
-      {labelmsg}
+    <InputContainer>
+      <Label name={name}>{labelmsg}</Label>
       <Input
         control
         value={value}
@@ -93,10 +92,12 @@ const InputFormik = ({
         name={name}
         type={type || 'text'}
         placeholder={placeholder}
+        valid={!fieldError}
         {...props}
       />
-      {fieldError && <div>{fieldError}</div>}
-    </Label>
+      {fieldError && <Error>{fieldError}</Error>}
+      {checkPassword && passwordStronger}
+    </InputContainer>
   );
 };
 

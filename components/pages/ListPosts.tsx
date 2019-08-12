@@ -1,7 +1,7 @@
 import { createRefetchContainer, graphql } from 'react-relay';
 import styled from 'styled-components';
 
-import withData from '../lib/withData';
+import withData from '../../lib/withData';
 
 const Title = styled.li`
   color: #007ea7;
@@ -63,7 +63,7 @@ export default withData(ListPostsRefetchContainer, {
     }
   `,
   variables: {
-    first: 10,
+    first: 5,
     search: ''
   }
 });

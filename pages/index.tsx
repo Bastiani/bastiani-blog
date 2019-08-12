@@ -1,3 +1,3 @@
-import ListPosts from '../components/ListPosts';
+import ListPosts from '../components/pages/ListPosts';
 
 export default ListPosts;

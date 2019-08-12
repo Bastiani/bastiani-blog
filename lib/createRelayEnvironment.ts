@@ -7,7 +7,7 @@ let relayEnvironment: Environment | null = null;
 
 // Define a function that fetches the results of an operation (query/mutation/etc)
 // and returns its results as a Promise:
-function fetchQuery(
+async function fetchQuery(
   // @ts-ignore
   operation,
   // @ts-ignore
@@ -17,6 +17,8 @@ function fetchQuery(
   // @ts-ignore
   uploadables
 ) {
+  const { token, ...newVariables } = variables.input || { token: '' };
+
   // Because we implement the graphql server, the client must to point to the same host
   // @ts-ignore
   const relayServer = process.browser
@@ -27,11 +29,12 @@ function fetchQuery(
     method: 'POST',
     headers: {
       Accept: 'application/json',
+      Authorization: token || '',
       'Content-Type': 'application/json'
     }, // Add authentication and other headers here
     body: JSON.stringify({
       query: operation.text, // GraphQL text from input
-      variables
+      variables: { input: newVariables }
     })
   }).then((response: any) => response.json());
 }

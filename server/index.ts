@@ -74,11 +74,6 @@ app.prepare().then(() => {
     ctx.respond = false;
   });
 
-  router.get('*', async ctx => {
-    await handle(ctx.req, ctx.res);
-    ctx.respond = false;
-  });
-
   router.all('/graphql', graphqlServer);
 
   if (process.env.NODE_ENV !== 'production') {
@@ -89,6 +84,11 @@ app.prepare().then(() => {
       })
     );
   }
+
+  router.get('*', async ctx => {
+    await handle(ctx.req, ctx.res);
+    ctx.respond = false;
+  });
 
   server.use(async (ctx, next) => {
     ctx.res.statusCode = 200;
