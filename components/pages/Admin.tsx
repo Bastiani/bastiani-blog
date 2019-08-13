@@ -1,12 +1,13 @@
 import { Button, FormGroup } from '@smooth-ui/core-sc';
 import { Formik } from 'formik';
-import * as yup from 'yup';
+import nextCookie from 'next-cookies';
+import Router from 'next/router';
 import styled from 'styled-components';
+import * as yup from 'yup';
 
 import InputFormik from '../input/InputFormik';
 import TextAreaFormik from '../input/TextAreaFormik';
 import PostAddMutation from './mutations/PostAddMutation';
-import { getToken } from './security/authentication';
 
 const validationSchema = () =>
   yup.object().shape({
@@ -19,7 +20,7 @@ const Form = styled.div`
   flex-direction: column;
 `;
 
-const Admin = () => (
+const Admin = (ctx: any) => (
   <Formik
     initialValues={{
       title: '',
@@ -27,7 +28,8 @@ const Admin = () => (
     }}
     validationSchema={validationSchema()}
     onSubmit={async (values, { setSubmitting }) => {
-      const token = await getToken();
+      const { token } = nextCookie(ctx);
+
       const newValues = { token, ...values };
       const onCompleted = (res: any) => {
         setSubmitting(false);
@@ -59,5 +61,26 @@ const Admin = () => (
     )}
   />
 );
+
+// @ts-ignore
+Admin.getInitialProps = (ctx: any) => {
+  const { token } = nextCookie(ctx);
+
+  const redirectOnNotLogin = () => {
+    if (process.browser) {
+      Router.push('/signin');
+      return {};
+    } else {
+      ctx.res.writeHead(301, { Location: '/signin' });
+      ctx.res.end();
+      return {};
+    }
+  };
+
+  if (!token) {
+    return redirectOnNotLogin();
+  }
+  return {};
+};
 
 export default Admin;

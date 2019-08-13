@@ -1,7 +1,8 @@
 import { Button, FormGroup } from '@smooth-ui/core-sc';
 import { Formik } from 'formik';
-import * as yup from 'yup';
+import cookie from 'js-cookie';
 import Router from 'next/router';
+import * as yup from 'yup';
 
 import InputFormik from '../input/InputFormik';
 import SigninMutation from './mutations/SigninMutation';
@@ -32,6 +33,7 @@ const Signin = () => (
           console.log('Erro', 'Erro ao tentar fazer login');
         } else if (response.token) {
           setToken(response.token);
+          cookie.set('token', response.token, { expires: 1 });
           Router.push('/admin');
         }
       };
