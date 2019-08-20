@@ -103,7 +103,7 @@ app.prepare().then(() => {
     await next();
   });
 
-  server.use(serve(__dirname + '/.next/static/css'));
+  server.use(serve(__dirname + '/.next/static'));
 
   server.use(cors());
 
