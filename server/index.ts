@@ -8,6 +8,7 @@ import convert from 'koa-convert';
 import { print } from 'graphql/language';
 import koaPlayground from 'graphql-playground-middleware-koa';
 import { GraphQLError } from 'graphql';
+import serve from 'koa-static';
 
 import schema from './schema';
 import * as loaders from './graphql/loader';
@@ -101,6 +102,8 @@ app.prepare().then(() => {
     ctx.res.statusCode = 200;
     await next();
   });
+
+  server.use(serve(__dirname + '/.next/static/css'));
 
   server.use(cors());
 

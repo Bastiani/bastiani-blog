@@ -27,7 +27,7 @@ const renderPostText = (text: string) => {
     if (post.includes('code')) {
       return (
         // @ts-ignore
-        <Highlight key={index} language="javascript">
+        <Highlight key={index} language="javascript" innerHtml>
           {post.replace('code', '')}
         </Highlight>
       );
