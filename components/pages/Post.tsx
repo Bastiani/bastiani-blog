@@ -1,9 +1,9 @@
 import marked from 'marked';
-import Highlight from 'react-highlight';
+// import Highlight from 'react-highlight';
 import { fetchQuery, graphql } from 'react-relay';
 
 import initEnvironment from '../../lib/createRelayEnvironment';
-import '../../node_modules/highlight.js/styles/vs2015.css';
+// import '../../node_modules/highlight.js/styles/vs2015.css';
 
 const query = graphql`
   query PostQuery($slug: String) {
@@ -27,9 +27,7 @@ const renderPostText = (text: string) => {
     if (post.includes('code')) {
       return (
         // @ts-ignore
-        <Highlight key={index} language="javascript">
-          {post.replace('code', '')}
-        </Highlight>
+        <div key={index}>{post.replace('code', '')}</div>
       );
     }
     return (
