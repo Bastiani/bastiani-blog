@@ -1,5 +1,9 @@
+import marked from 'marked';
+import Highlight from 'react-highlight';
 import { fetchQuery, graphql } from 'react-relay';
+
 import initEnvironment from '../../lib/createRelayEnvironment';
+import '../../node_modules/highlight.js/styles/vs2015.css';
 
 const query = graphql`
   query PostQuery($slug: String) {
@@ -12,13 +16,35 @@ const query = graphql`
   }
 `;
 
-const PostDetails = (postBySlug: any) => (
+const renderPostText = (text: string) => {
+  marked.setOptions({
+    gfm: true,
+    tables: true,
+    breaks: true
+  });
+  const postArray = text.split('$');
+  return postArray.map((post, index) => {
+    if (post.includes('code')) {
+      return (
+        // @ts-ignore
+        <Highlight key={index} language="javascript">
+          {post.replace('code', '')}
+        </Highlight>
+      );
+    }
+    return (
+      <div key={index} dangerouslySetInnerHTML={{ __html: marked(post) }} />
+    );
+  });
+};
+
+const PostDetails = ({ postBySlug }: any) => (
   <>
     {postBySlug && (
       <>
-        <h1>{postBySlug.postBySlug.title}</h1>
+        <h1>{postBySlug.title}</h1>
         <br />
-        {postBySlug.postBySlug.text}
+        {renderPostText(postBySlug.text)}
       </>
     )}
   </>
@@ -39,6 +65,7 @@ Post.getInitialProps = async ({ query: queryParams }: any) => {
   const queryProps = await fetchQuery(environment, query, {
     slug: queryParams.slug
   });
+
   const queryRecords = environment
     .getStore()
     .getSource()

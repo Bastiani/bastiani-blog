@@ -16,9 +16,12 @@ function ListPosts({ query }) {
         query.posts &&
         // @ts-ignore
         query.posts.edges.map(({ node }) => (
-          <Link href={`/post?slug=${'teste'}`} as="/post/teste">
-            <a>Title: {node.title}</a>
-          </Link>
+          <div key={node.slug}>
+            <Link href={`/post?slug=${node.slug}`} as={`/post/${node.slug}`}>
+              <a>Title: {node.title}</a>
+            </Link>
+            <br />
+          </div>
         ))}
     </>
   );
@@ -42,6 +45,7 @@ const ListPostsRefetchContainer = createRefetchContainer(
           edges {
             node {
               id
+              slug
               title
               text
             }
@@ -64,7 +68,7 @@ export default withData(ListPostsRefetchContainer, {
     }
   `,
   variables: {
-    first: 2,
+    first: 100,
     search: ''
   }
 });
