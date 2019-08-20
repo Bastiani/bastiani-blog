@@ -64,6 +64,13 @@ app.prepare().then(() => {
     ctx.respond = false;
   });
 
+  // router.get('/post/:slug', async ctx => {
+  //   console.log('========== /post', ctx.params, ctx.query);
+  //   // await handle(ctx.req, ctx.res, { query: { slug: ctx.params.slug } });
+  //   await app.render(ctx.req, ctx.res, '/post', { slug: ctx.params.slug });
+  //   ctx.respond = false;
+  // });
+
   router.get('/admin', async ctx => {
     await handle(ctx.req, ctx.res);
     ctx.respond = false;

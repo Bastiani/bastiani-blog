@@ -1,7 +1,8 @@
 import {
   GraphQLBoolean,
+  GraphQLNonNull,
   GraphQLObjectType,
-  GraphQLString,
+  GraphQLString
 } from 'graphql';
 import { globalIdField } from 'graphql-relay';
 import { Types } from 'mongoose';
@@ -12,6 +13,7 @@ import { nodeInterface, registerType } from '../../interface/Node';
 export interface IPost {
   id: string;
   _id: Types.ObjectId;
+  slug: string;
   title: string;
   text: string;
   user: Types.ObjectId;
@@ -23,37 +25,41 @@ const PostType = registerType(
     name: 'Post',
     description: 'Post type definition',
     fields: () => ({
-      id: globalIdField('Post', (post) => post._id),
+      id: globalIdField('Post', post => post._id),
       // tslint:disable-next-line: object-literal-sort-keys
       _id: {
         type: GraphQLString,
         // tslint:disable-next-line:object-literal-sort-keys
-        resolve: (post) => post._id,
+        resolve: post => post._id
+      },
+      slug: {
+        type: GraphQLNonNull(GraphQLString),
+        description: 'Slug of the post'
       },
       title: {
         type: GraphQLString,
-        description: 'Title of the post',
+        description: 'Title of the post'
       },
       text: {
         type: GraphQLString,
-        description: 'Text of the post',
+        description: 'Text of the post'
       },
       user: {
         type: GraphQLString,
-        description: 'User of the post',
+        description: 'User of the post'
       },
       active: {
         type: GraphQLBoolean,
-        description: 'Active of the post',
-      },
+        description: 'Active of the post'
+      }
     }),
-    interfaces: () => [nodeInterface],
-  }),
+    interfaces: () => [nodeInterface]
+  })
 );
 
 export const PostConnection = connectionDefinitions({
   name: 'Post',
-  nodeType: PostType,
+  nodeType: PostType
 });
 
 export default PostType;

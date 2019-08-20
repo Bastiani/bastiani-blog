@@ -2,7 +2,7 @@ import DataLoader from 'dataloader';
 
 import {
   connectionFromMongoCursor,
-  mongooseLoader,
+  mongooseLoader
 } from '@entria/graphql-mongoose-loader';
 import { ConnectionArguments } from 'graphql-relay';
 import { Types } from 'mongoose';
@@ -12,7 +12,7 @@ import UserModel from './UserModel';
 import { IUser } from './UserType';
 
 interface IArgs {
-  search: string;
+  search?: string;
 }
 
 export default class User {
@@ -33,13 +33,14 @@ export default class User {
   }
 }
 
-export const getLoader = () => new DataLoader((ids: string[]) => mongooseLoader(UserModel, ids));
+export const getLoader = () =>
+  new DataLoader((ids: string[]) => mongooseLoader(UserModel, ids));
 // @ts-ignore
 const viewerCanSee = (context, data) => true;
 
 export const load = async (
   context: IGraphQLContext,
-  id: string | object | Types.ObjectId,
+  id: string | object | Types.ObjectId
 ): Promise<User | null> => {
   if (!id) {
     return null;
@@ -56,19 +57,22 @@ export const load = async (
   return viewerCanSee(context, data) ? new User(data) : null;
 };
 
-export const clearCache = ({ dataloaders }: IGraphQLContext, id: string) => dataloaders.UserLoader.clear(id.toString());
+export const clearCache = ({ dataloaders }: IGraphQLContext, id: string) =>
+  dataloaders.UserLoader.clear(id.toString());
 
 export const loadUsers = async (
   context: IGraphQLContext,
-  args: ConnectionArguments & IArgs,
+  args: ConnectionArguments & IArgs
 ) => {
   const { user } = context;
-  if (!user) { throw new Error('Unauthorized user'); }
+  if (!user) {
+    throw new Error('Unauthorized user');
+  }
   const { search } = args;
   const conditions = {
     ...(search != null
       ? { name: { $regex: new RegExp(`^${args.search}`, 'ig') } }
-      : {}),
+      : {})
   };
 
   const users = UserModel.find(conditions).sort({ createdAt: -1 });
@@ -77,6 +81,6 @@ export const loadUsers = async (
     cursor: users,
     context,
     args,
-    loader: load,
+    loader: load
   });
 };

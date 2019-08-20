@@ -17,13 +17,13 @@ async function fetchQuery(
   // @ts-ignore
   uploadables
 ) {
-  const { token, ...newVariables } = variables.input || { token: '' };
+  const { token, ...newVariables } = variables.input ||
+    variables || { token: '' };
 
   // Because we implement the graphql server, the client must to point to the same host
   // @ts-ignore
-  const relayServer = process.browser
-    ? 'http://localhost:3000/graphql'
-    : process.env.GRAPHQL_URL;
+  const relayServer =
+    typeof window !== 'undefined' ? '' : process.env.GRAPHQL_URL;
   // @ts-ignore
   return fetch(relayServer, {
     method: 'POST',
@@ -34,7 +34,7 @@ async function fetchQuery(
     }, // Add authentication and other headers here
     body: JSON.stringify({
       query: operation.text, // GraphQL text from input
-      variables: { input: newVariables }
+      variables: variables.input ? { input: newVariables } : newVariables
     })
   }).then((response: any) => response.json());
 }
@@ -49,7 +49,7 @@ export default function initEnvironment({ records = {} } = {}) {
   // Make sure to create a new Relay environment for every server-side request so that data
   // isn't shared between connections (which would be bad)
   // @ts-ignore
-  if (!process.browser) {
+  if (typeof window === 'undefined') {
     return new Environment({
       network,
       store

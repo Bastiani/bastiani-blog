@@ -20,48 +20,50 @@ const Form = styled.div`
   flex-direction: column;
 `;
 
-const Admin = (ctx: any) => (
-  <AuthLayout>
-    <Formik
-      initialValues={{
-        title: '',
-        text: ''
-      }}
-      validationSchema={validationSchema()}
-      onSubmit={async (values, { setSubmitting }) => {
-        const { token } = nextCookie(ctx);
+const Admin = (ctx: any) => {
+  return (
+    <AuthLayout>
+      <Formik
+        initialValues={{
+          title: '',
+          text: ''
+        }}
+        validationSchema={validationSchema()}
+        onSubmit={async (values, { setSubmitting }) => {
+          const { token } = nextCookie(ctx);
 
-        const newValues = { token, ...values };
-        const onCompleted = (res: any) => {
-          setSubmitting(false);
-          const response = res && res.PostAddMutation;
+          const newValues = { token, ...values };
+          const onCompleted = (res: any) => {
+            setSubmitting(false);
+            const response = res && res.PostAddMutation;
 
-          if (response && response.error) {
+            if (response && response.error) {
+              console.log('Error', 'Error add post');
+            }
+          };
+
+          const onError = () => {
+            setSubmitting(false);
             console.log('Error', 'Error add post');
-          }
-        };
+          };
 
-        const onError = () => {
+          PostAddMutation.commit(newValues, onCompleted, onError);
           setSubmitting(false);
-          console.log('Error', 'Error add post');
-        };
-
-        PostAddMutation.commit(newValues, onCompleted, onError);
-        setSubmitting(false);
-      }}
-      render={({ handleSubmit }) => (
-        <Form>
-          <FormGroup>
-            <InputFormik label="Title" name="title" placeholder="Title" />
-            <TextAreaFormik label="Text" name="text" placeholder="Text" />
-          </FormGroup>
-          <Button variant="success" onClick={handleSubmit}>
-            Add Post
-          </Button>
-        </Form>
-      )}
-    />
-  </AuthLayout>
-);
+        }}
+        render={({ handleSubmit }) => (
+          <Form>
+            <FormGroup>
+              <InputFormik label="Title" name="title" placeholder="Title" />
+              <TextAreaFormik label="Text" name="text" placeholder="Text" />
+            </FormGroup>
+            <Button variant="success" onClick={handleSubmit}>
+              Add Post
+            </Button>
+          </Form>
+        )}
+      />
+    </AuthLayout>
+  );
+};
 
 export default Admin;

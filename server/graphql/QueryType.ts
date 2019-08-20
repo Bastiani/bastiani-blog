@@ -1,5 +1,5 @@
-import { GraphQLID, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
-import { connectionArgs, fromGlobalId } from 'graphql-relay';
+import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql';
+import { connectionArgs } from 'graphql-relay';
 
 import { nodeField } from '../interface/Node';
 import PostType, { PostConnection } from '../modules/Post/PostType';
@@ -16,39 +16,43 @@ export default new GraphQLObjectType({
     me: {
       type: UserType,
       description: 'Me is the logged user',
-      resolve: async (context) => UserLoader.load(context, context.user && context.user.id),
+      resolve: async context =>
+        UserLoader.load(context, context.user && context.user.id)
     },
     users: {
       type: GraphQLNonNull(UserConnection.connectionType),
       args: {
         ...connectionArgs,
         search: {
-          type: GraphQLString,
-        },
+          type: GraphQLString
+        }
       },
       // @ts-ignore
-      resolve: async (obj, args, context) => await UserLoader.loadUsers(context, args),
+      resolve: async (obj, args, context) =>
+        await UserLoader.loadUsers(context, args)
     },
-    post: {
+    postBySlug: {
       type: PostType,
-      description: 'Post by id',
+      description: 'Post by slug',
       args: {
-        id: {
-          type: GraphQLNonNull(GraphQLID),
-        },
+        slug: {
+          type: GraphQLString
+        }
       },
-      resolve: async (_, { id }, context) => PostLoader.load(context, fromGlobalId(id).id),
+      resolve: async (_, args) => PostLoader.loadBySlug(args)
     },
     posts: {
       type: PostConnection.connectionType,
       args: {
         ...connectionArgs,
-        search: {
-          type: GraphQLString,
+        slug: {
+          type: GraphQLString
         },
+        search: {
+          type: GraphQLString
+        }
       },
-      // @ts-ignore
-      resolve: async (obj, args, context) => PostLoader.loadPosts(context, args),
-    },
-  }),
+      resolve: async (_, args, context) => PostLoader.loadPosts(context, args)
+    }
+  })
 });

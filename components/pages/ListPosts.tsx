@@ -1,24 +1,25 @@
+import Link from 'next/link';
 import { createRefetchContainer, graphql } from 'react-relay';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
 import withData from '../../lib/withData';
 
-const Title = styled.li`
-  color: #007ea7;
-`;
+// const Title = styled.li`
+//   color: #007ea7;
+// `;
 
 // @ts-ignore
 function ListPosts({ query }) {
   return (
     <>
-      <ul>
-        {query &&
-          query.posts &&
-          // @ts-ignore
-          query.posts.edges.map(({ node }) => (
-            <Title key={node.id}>Title: {node.title}</Title>
-          ))}
-      </ul>
+      {query &&
+        query.posts &&
+        // @ts-ignore
+        query.posts.edges.map(({ node }) => (
+          <Link href={`/post?slug=${'teste'}`} as="/post/teste">
+            <a>Title: {node.title}</a>
+          </Link>
+        ))}
     </>
   );
 }
@@ -63,7 +64,7 @@ export default withData(ListPostsRefetchContainer, {
     }
   `,
   variables: {
-    first: 5,
+    first: 2,
     search: ''
   }
 });
