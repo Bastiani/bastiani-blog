@@ -1,21 +1,35 @@
 import Link from 'next/link';
-import { createRefetchContainer, graphql } from 'react-relay';
-// import styled from 'styled-components';
+import { fetchQuery, graphql } from 'react-relay';
 
-import withData from '../../lib/withData';
+import initEnvironment from '../../lib/createRelayEnvironment';
 
-// const Title = styled.li`
-//   color: #007ea7;
-// `;
+const listPostsQuery = graphql`
+  query ListPostsQuery($first: Int, $search: String) {
+    posts(first: $first, search: $search)
+      @connection(key: "ListPosts_posts", filters: []) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      edges {
+        node {
+          id
+          slug
+          title
+          text
+        }
+      }
+    }
+  }
+`;
 
 // @ts-ignore
-function ListPosts({ query }) {
+function ListPosts(props) {
+  const { posts } = props;
   return (
     <>
-      {query &&
-        query.posts &&
-        // @ts-ignore
-        query.posts.edges.map(({ node }) => (
+      {posts &&
+        posts.edges.map(({ node }: any) => (
           <div key={node.slug}>
             <Link href={`/post?slug=${node.slug}`} as={`/post/${node.slug}`}>
               <a>Title: {node.title}</a>
@@ -27,48 +41,22 @@ function ListPosts({ query }) {
   );
 }
 
-const ListPostsRefetchContainer = createRefetchContainer(
-  ListPosts,
-  {
-    query: graphql`
-      fragment ListPosts_query on Query
-        @argumentDefinitions(
-          search: { type: "String!" }
-          first: { type: Int }
-        ) {
-        posts(first: $first, search: $search)
-          @connection(key: "ListPosts_posts", filters: []) {
-          pageInfo {
-            hasNextPage
-            endCursor
-          }
-          edges {
-            node {
-              id
-              slug
-              title
-              text
-            }
-          }
-        }
-      }
-    `
-  },
-  graphql`
-    query ListPosts_refetchQuery($first: Int, $search: String) {
-      ...ListPosts_query @arguments(first: $first, search: $search)
-    }
-  `
-);
+ListPosts.getInitialProps = async () => {
+  const environment = initEnvironment();
 
-export default withData(ListPostsRefetchContainer, {
-  query: graphql`
-    query ListPostsQuery($first: Int, $search: String) {
-      ...ListPosts_query @arguments(first: $first, search: $search)
-    }
-  `,
-  variables: {
-    first: 100,
-    search: ''
-  }
-});
+  const queryProps = await fetchQuery(environment, listPostsQuery, {
+    first: 100
+  });
+
+  const queryRecords = environment
+    .getStore()
+    .getSource()
+    .toJSON();
+
+  return {
+    ...queryProps,
+    queryRecords
+  };
+};
+
+export default ListPosts;
