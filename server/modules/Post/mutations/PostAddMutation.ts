@@ -11,28 +11,37 @@ const mutation = mutationWithClientMutationId({
   name: 'PostAdd',
   inputFields: {
     title: {
-      type: GraphQLNonNull(GraphQLString),
+      type: GraphQLNonNull(GraphQLString)
+    },
+    description: {
+      type: GraphQLNonNull(GraphQLString)
     },
     text: {
-      type: GraphQLNonNull(GraphQLString),
+      type: GraphQLNonNull(GraphQLString)
     },
     active: {
-      type: GraphQLBoolean,
-    },
+      type: GraphQLBoolean
+    }
   },
   mutateAndGetPayload: async (args, context: IGraphQLContext) => {
     const { user } = context;
-    if (!user) { throw new Error('Unauthorized user'); }
+    if (!user) {
+      throw new Error('Unauthorized user');
+    }
 
-    const { title, text, active } = args;
+    const { title, description, text, active } = args;
 
     const newPost = await new PostModel({
-      title, text, user: user._id, active,
+      title,
+      description,
+      text,
+      user: user._id,
+      active
     }).save();
 
     return {
       post: newPost,
-      error: null,
+      error: null
     };
   },
   outputFields: {
@@ -42,15 +51,15 @@ const mutation = mutationWithClientMutationId({
         const node = new PostLoader(post);
         return {
           cursor: toGlobalId('Post', post.id),
-          node,
+          node
         };
-      },
+      }
     },
     error: {
       type: GraphQLString,
-      resolve: ({ error }) => error,
-    },
-  },
+      resolve: ({ error }) => error
+    }
+  }
 });
 
 export default mutation;

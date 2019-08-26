@@ -3,6 +3,7 @@ import { Document, model, Schema, Types } from 'mongoose';
 const { ObjectId } = Schema.Types;
 
 type PostInterface = {
+  description: string;
   title: string;
   text: string;
   slug: string;
@@ -20,15 +21,21 @@ const PostSchema = new Schema<PostInterface>(
     },
     title: {
       type: String,
-      trim: true
+      trim: true,
+      required: true
+    },
+    description: {
+      type: String,
+      trim: true,
+      required: true
     },
     text: {
-      type: String
+      type: String,
+      required: true
     },
     user: {
       type: ObjectId,
       ref: 'User',
-      required: true,
       index: true
     },
     active: {

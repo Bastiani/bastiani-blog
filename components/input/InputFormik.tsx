@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import get from 'lodash/get';
 import { Input, Label } from '@smooth-ui/core-sc';
 import { connect } from 'formik';
+import get from 'lodash/get';
+import React, { useState } from 'react';
 
-import { Error, InputContainer } from '../../styles/input/input';
+import { Error, InputContainer } from './styles/input';
 
 interface IInputFormik {
   name: string;

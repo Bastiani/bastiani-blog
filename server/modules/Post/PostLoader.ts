@@ -21,14 +21,16 @@ export default class Post {
   public _id: Types.ObjectId;
   public slug: string;
   public title: string;
+  public description: string;
   public text: string;
-  public user: Types.ObjectId;
+  public user?: Types.ObjectId;
   public active?: boolean;
   constructor(data: IPost) {
     this.id = data.id;
     this._id = data._id;
     this.slug = data.slug;
     this.title = data.title;
+    this.description = data.description;
     this.text = data.text;
     this.user = data.user;
     this.active = data.active;

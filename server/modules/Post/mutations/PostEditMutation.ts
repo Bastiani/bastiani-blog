@@ -1,4 +1,9 @@
-import { GraphQLBoolean, GraphQLID, GraphQLNonNull, GraphQLString } from 'graphql';
+import {
+  GraphQLBoolean,
+  GraphQLID,
+  GraphQLNonNull,
+  GraphQLString
+} from 'graphql';
 import { fromGlobalId, mutationWithClientMutationId } from 'graphql-relay';
 
 import { IGraphQLContext } from '../../../graphql/types/GraphQLContext';
@@ -10,44 +15,49 @@ const mutation = mutationWithClientMutationId({
   name: 'PostEdit',
   inputFields: {
     id: {
-      type: GraphQLNonNull(GraphQLID),
+      type: GraphQLNonNull(GraphQLID)
     },
     title: {
-      type: GraphQLNonNull(GraphQLString),
+      type: GraphQLNonNull(GraphQLString)
+    },
+    description: {
+      type: GraphQLNonNull(GraphQLString)
     },
     text: {
-      type: GraphQLNonNull(GraphQLString),
+      type: GraphQLNonNull(GraphQLString)
     },
     active: {
-      type: GraphQLBoolean,
-    },
+      type: GraphQLBoolean
+    }
   },
   mutateAndGetPayload: async (args, context: IGraphQLContext) => {
     const { user } = context;
-    if (!user) { throw new Error('Unauthorized user'); }
+    if (!user) {
+      throw new Error('Unauthorized user');
+    }
 
-    const { id, title, text, active } = args;
+    const { id, title, description, text, active } = args;
 
     const post = await PostModel.findOne({
-      _id: fromGlobalId(id).id,
+      _id: fromGlobalId(id).id
     });
 
     // If not, throw an error
     if (!post) {
       return {
-        error: 'Post inválido',
+        error: 'Post inválido'
       };
     }
 
     // Edit record
-    await post.update({ id, title, text, active });
+    await post.update({ id, title, description, text, active });
 
     // Clear dataloader cache
     PostLoader.clearCache(context, post._id);
 
     return {
       id: post._id,
-      error: null,
+      error: null
     };
   },
   outputFields: {
@@ -61,13 +71,13 @@ const mutation = mutationWithClientMutationId({
         }
 
         return newPost;
-      },
+      }
     },
     error: {
       type: GraphQLString,
-      resolve: ({ error }) => error,
-    },
-  },
+      resolve: ({ error }) => error
+    }
+  }
 });
 
 export default mutation;

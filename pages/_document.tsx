@@ -19,6 +19,10 @@ export default class MyDocument extends Document {
             name="viewport"
             content="initial-scale=1.0, width=device-width"
           />
+          <link
+            href="https://fonts.googleapis.com/css?family=Nunito&display=swap"
+            rel="stylesheet"
+          ></link>
           {/*
           // @ts-ignore */}
           {this.props.styleTags}

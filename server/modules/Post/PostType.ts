@@ -15,8 +15,9 @@ export interface IPost {
   _id: Types.ObjectId;
   slug: string;
   title: string;
+  description: string;
   text: string;
-  user: Types.ObjectId;
+  user?: Types.ObjectId;
   active?: boolean;
 }
 
@@ -37,11 +38,15 @@ const PostType = registerType(
         description: 'Slug of the post'
       },
       title: {
-        type: GraphQLString,
+        type: GraphQLNonNull(GraphQLString),
         description: 'Title of the post'
       },
+      description: {
+        type: GraphQLNonNull(GraphQLString),
+        description: 'Description of the post'
+      },
       text: {
-        type: GraphQLString,
+        type: GraphQLNonNull(GraphQLString),
         description: 'Text of the post'
       },
       user: {

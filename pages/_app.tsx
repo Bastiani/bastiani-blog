@@ -1,8 +1,24 @@
 import App, { Container } from 'next/app';
 import React from 'react';
 import { ReactRelayContext } from 'react-relay';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
+import {
+  Aside,
+  Layout,
+  Main,
+  ProfileAuthor
+} from '../components/pages/template/layout';
+import { themeLight } from '../components/pages/template/theme';
 import initEnvironment from '../lib/createRelayEnvironment';
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    margin: 0px;
+    background-color: #FFFFFF;
+    font-family: 'Nunito', sans-serif;
+  }
+`;
 
 class MyApp extends App {
   public render() {
@@ -12,7 +28,22 @@ class MyApp extends App {
     return (
       <Container>
         <ReactRelayContext.Provider value={{ environment, variables: {} }}>
-          <Component {...pageProps} />
+          <GlobalStyle />
+          <ThemeProvider theme={themeLight}>
+            <>
+              <Layout>
+                <Aside>
+                  <ProfileAuthor>
+                    <h1>Rafael de Bastiani</h1>
+                    <small>Desenvolvedor Fullstack</small>
+                  </ProfileAuthor>
+                </Aside>
+                <Main>
+                  <Component {...pageProps} />
+                </Main>
+              </Layout>
+            </>
+          </ThemeProvider>
         </ReactRelayContext.Provider>
       </Container>
     );

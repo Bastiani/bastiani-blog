@@ -71,10 +71,10 @@ app.prepare().then(() => {
   //   ctx.respond = false;
   // });
 
-  router.get('/admin', async ctx => {
-    await handle(ctx.req, ctx.res);
-    ctx.respond = false;
-  });
+  // router.get('/admin', async ctx => {
+  //   await handle(ctx.req, ctx.res);
+  //   ctx.respond = false;
+  // });
 
   router.get('/signin', async ctx => {
     await handle(ctx.req, ctx.res);

@@ -6,7 +6,6 @@ import * as yup from 'yup';
 
 import InputFormik from '../input/InputFormik';
 import SigninMutation from './mutations/SigninMutation';
-import { setToken } from './security/authentication';
 
 const validationSchema = () =>
   yup.object().shape({
@@ -32,7 +31,6 @@ const Signin = () => (
         if (response && response.error) {
           console.log('Erro', 'Erro ao tentar fazer login');
         } else if (response.token) {
-          setToken(response.token);
           cookie.set('token', response.token, { expires: 1 });
           Router.push('/admin');
         }

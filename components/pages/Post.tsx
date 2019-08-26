@@ -3,7 +3,7 @@ import Highlight from 'react-highlight';
 import { fetchQuery, graphql } from 'react-relay';
 
 import initEnvironment from '../../lib/createRelayEnvironment';
-import './vs2015.css';
+import '../../static/css/vs2015.css';
 
 const query = graphql`
   query PostQuery($slug: String) {
@@ -11,6 +11,7 @@ const query = graphql`
       id
       slug
       title
+      description
       text
     }
   }
@@ -43,6 +44,8 @@ const PostDetails = ({ postBySlug }: any) => (
     {postBySlug && (
       <>
         <h1>{postBySlug.title}</h1>
+        <br />
+        <h3>{postBySlug.description}</h3>
         <br />
         {renderPostText(postBySlug.text)}
       </>

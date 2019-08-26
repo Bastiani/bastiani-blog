@@ -3,7 +3,7 @@ import { connect } from 'formik';
 import get from 'lodash/get';
 import React from 'react';
 
-import { Error, InputContainer } from '../../styles/input/input';
+import { Error, InputContainer } from './styles/input';
 
 interface ITextareaFormik {
   name: string;

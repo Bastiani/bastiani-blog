@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { fetchQuery, graphql } from 'react-relay';
 
 import initEnvironment from '../../lib/createRelayEnvironment';
+import { LinkContentStyled, LinkWrapperStyled } from './template/layout';
 
 const listPostsQuery = graphql`
   query ListPostsQuery($first: Int, $search: String) {
@@ -16,6 +17,7 @@ const listPostsQuery = graphql`
           id
           slug
           title
+          description
           text
         }
       }
@@ -26,16 +28,25 @@ const listPostsQuery = graphql`
 // @ts-ignore
 function ListPosts(props) {
   const { posts } = props;
+
   return (
+    // @ts-ignore
     <>
       {posts &&
         posts.edges.map(({ node }: any) => (
-          <div key={node.slug}>
+          <LinkWrapperStyled key={node.slug}>
             <Link href={`/post?slug=${node.slug}`} as={`/post/${node.slug}`}>
-              <a>Title: {node.title}</a>
+              <a>
+                <section>
+                  <LinkContentStyled>
+                    <h1>{node.title}</h1>
+                    <h2>{node.description}</h2>
+                  </LinkContentStyled>
+                </section>
+              </a>
             </Link>
-            <br />
-          </div>
+            <hr />
+          </LinkWrapperStyled>
         ))}
     </>
   );
