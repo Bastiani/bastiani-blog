@@ -25,6 +25,9 @@ export const Aside = styled.aside`
   background-color: ${props => props.theme.aside.backgroundColor || '#22333b'};
   padding: 10px;
   box-shadow: 1px 0px 2px 1px rgba(116, 121, 127, 0.43);
+  position: fixed;
+  width: 12vw;
+  height: 100vh;
 `;
 
 export const Main = styled.main`
