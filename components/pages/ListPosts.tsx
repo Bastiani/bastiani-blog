@@ -1,32 +1,16 @@
 import Link from 'next/link';
-import { fetchQuery, graphql } from 'react-relay';
+import { fetchQuery } from 'react-relay';
 
 import initEnvironment from '../../lib/createRelayEnvironment';
+import { ListPostsQueryResponse } from './queries/__generated__/ListPostsQuery.graphql';
+import { listPostsQuery } from './queries/ListPostsQuery';
 import { LinkContentStyled, LinkWrapperStyled } from './template/layout';
 
-const listPostsQuery = graphql`
-  query ListPostsQuery($first: Int, $search: String) {
-    posts(first: $first, search: $search)
-      @connection(key: "ListPosts_posts", filters: []) {
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-      edges {
-        node {
-          id
-          slug
-          title
-          description
-          text
-        }
-      }
-    }
-  }
-`;
+interface IProps {
+  posts: ListPostsQueryResponse['posts'];
+}
 
-// @ts-ignore
-function ListPosts(props) {
+const ListPosts = (props: IProps) => {
   const { posts } = props;
 
   return (
@@ -50,7 +34,7 @@ function ListPosts(props) {
         ))}
     </>
   );
-}
+};
 
 ListPosts.getInitialProps = async () => {
   const environment = initEnvironment();

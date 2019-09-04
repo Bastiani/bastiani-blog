@@ -1,4 +1,5 @@
 import App, { Container } from 'next/app';
+import Link from 'next/link';
 import React from 'react';
 import { ReactRelayContext } from 'react-relay';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
@@ -34,7 +35,11 @@ class MyApp extends App {
               <Layout>
                 <Aside>
                   <ProfileAuthor>
-                    <h1>Rafael de Bastiani</h1>
+                    <Link href='/'>
+                      <a>
+                        <h1>Rafael de Bastiani</h1>
+                      </a>
+                    </Link>
                     <small>Desenvolvedor Fullstack</small>
                   </ProfileAuthor>
                 </Aside>

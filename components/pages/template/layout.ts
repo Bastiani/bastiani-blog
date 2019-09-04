@@ -91,4 +91,21 @@ export const ProfileAuthor = styled.div`
     font-weight: 300;
   }
   text-align: center;
+  a {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  a:hover {
+    color: black;
+  }
+
+  a:active {
+    color: black;
+  }
+
+  a:visited {
+    color: black;
+  }
 `;
