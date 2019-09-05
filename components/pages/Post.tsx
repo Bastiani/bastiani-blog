@@ -84,17 +84,15 @@ const Post = (props: IProps) => {
 
           return (
             <>
-              <Disqus.CommentCount
-                shortname={disqusShortname}
-                config={disqusConfig}
-              >
-                Comments
-              </Disqus.CommentCount>
               <PostDetails postBySlug={postBySlug} />
               <Disqus.CommentEmbed
                 commentId={postBySlug.id}
                 showMedia={true}
                 height={160}
+              />
+              <Disqus.DiscussionEmbed
+                shortname={disqusShortname}
+                config={disqusConfig}
               />
             </>
           );
