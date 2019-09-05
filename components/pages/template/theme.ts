@@ -13,7 +13,7 @@ export const themeDark = {
 
 export const themeLight = {
   header: {
-    backgroundColor: '#CAEBF2'
+    backgroundColor: '#FFFFFF'
   },
   main: {
     backgroundColor: '#FFFFFF',

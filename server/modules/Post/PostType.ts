@@ -53,6 +53,10 @@ const PostType = registerType(
         type: GraphQLString,
         description: 'User of the post'
       },
+      createdAt: {
+        type: GraphQLString,
+        resolve: obj => obj.createdAt.toISOString()
+      },
       active: {
         type: GraphQLBoolean,
         description: 'Active of the post'

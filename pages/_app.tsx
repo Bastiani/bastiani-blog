@@ -1,38 +1,61 @@
+import { PageTransition } from 'next-page-transitions';
 import App, { Container } from 'next/app';
 import Link from 'next/link';
 import React from 'react';
-import { ReactRelayContext } from 'react-relay';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 import {
   Aside,
+  Header,
   Layout,
   Main,
   ProfileAuthor
 } from '../components/pages/template/layout';
 import { themeLight } from '../components/pages/template/theme';
-import initEnvironment from '../lib/createRelayEnvironment';
 
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0px;
     background-color: #FFFFFF;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    color: #74797F;
+    .page-transition-enter {
+      opacity: 0;
+    }
+    .page-transition-enter-active {
+      opacity: 1;
+      transition: opacity 300ms;
+    }
+    .page-transition-exit {
+      opacity: 1;
+    }
+    .page-transition-exit-active {
+      opacity: 0;
+      transition: opacity 300ms;
+    }
   }
 `;
 
+// @ts-ignore
 class MyApp extends App {
   public render() {
-    const environment = initEnvironment();
+    // @ts-ignore
     const { Component, pageProps } = this.props;
 
     return (
       <Container>
-        <ReactRelayContext.Provider value={{ environment, variables: {} }}>
-          <GlobalStyle />
+        <GlobalStyle />
+        <PageTransition timeout={300} classNames='page-transition'>
           <ThemeProvider theme={themeLight}>
             <>
               <Layout>
+                <Header>
+                  <Link href='/'>
+                    <a>
+                      <h3>Rafael de Bastiani - Desenvolvedor Fullstack</h3>
+                    </a>
+                  </Link>
+                </Header>
                 <Aside>
                   <ProfileAuthor>
                     <Link href='/'>
@@ -41,6 +64,17 @@ class MyApp extends App {
                       </a>
                     </Link>
                     <small>Desenvolvedor Fullstack</small>
+                    <br />
+                    <a
+                      href='https://www.linkedin.com/in/bastiani/'
+                      target='_blank'
+                    >
+                      Linkedin
+                    </a>
+                    <br />
+                    <a href='https://github.com/Bastiani' target='_blank'>
+                      GitHub
+                    </a>
                   </ProfileAuthor>
                 </Aside>
                 <Main>
@@ -49,7 +83,7 @@ class MyApp extends App {
               </Layout>
             </>
           </ThemeProvider>
-        </ReactRelayContext.Provider>
+        </PageTransition>
       </Container>
     );
   }

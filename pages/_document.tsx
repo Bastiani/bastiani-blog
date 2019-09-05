@@ -16,13 +16,13 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <meta
-            name="viewport"
-            content="initial-scale=1.0, width=device-width"
+            name='viewport'
+            content='initial-scale=1.0, width=device-width'
           />
           <link
-            href="https://fonts.googleapis.com/css?family=Nunito&display=swap"
-            rel="stylesheet"
-          ></link>
+            href='https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap'
+            rel='stylesheet'
+          />
           {/*
           // @ts-ignore */}
           {this.props.styleTags}

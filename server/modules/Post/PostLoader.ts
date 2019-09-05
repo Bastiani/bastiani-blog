@@ -25,6 +25,7 @@ export default class Post {
   public text: string;
   public user?: Types.ObjectId;
   public active?: boolean;
+  public createdAt: Date;
   constructor(data: IPost) {
     this.id = data.id;
     this._id = data._id;
@@ -34,6 +35,8 @@ export default class Post {
     this.text = data.text;
     this.user = data.user;
     this.active = data.active;
+    // @ts-ignore
+    this.createdAt = data.createdAt;
   }
 }
 

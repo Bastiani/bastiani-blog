@@ -15,6 +15,7 @@ export const listPostsQuery = graphql`
           title
           description
           text
+          createdAt
         }
       }
     }
