@@ -85,11 +85,6 @@ const Post = (props: IProps) => {
           return (
             <>
               <PostDetails postBySlug={postBySlug} />
-              <Disqus.CommentEmbed
-                commentId={postBySlug.id}
-                showMedia={true}
-                height={160}
-              />
               <Disqus.DiscussionEmbed
                 shortname={disqusShortname}
                 config={disqusConfig}
