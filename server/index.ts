@@ -22,6 +22,10 @@ const handle = app.getRequestHandler();
 const graphqlSettingsPerReq = async (req: Request): Promise<OptionsData> => {
   const dataloaders = await getDataloaders(loaders);
   const { user } = await getUser(dataloaders, req.header.authorization);
+  console.log(
+    '====== process.env.NODE_ENV !== ',
+    process.env.NODE_ENV !== 'production'
+  );
 
   return {
     graphiql: process.env.NODE_ENV !== 'production',
