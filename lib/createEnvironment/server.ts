@@ -18,7 +18,8 @@ export default {
         network: new RelayNetworkLayer([
           urlMiddleware({
             url: () =>
-              process.env.RELAY_ENDPOINT || 'http://localhost:3000/graphql'
+              process.env.RELAY_ENDPOINT_SERVER ||
+              'http://localhost:3000/graphql'
           }),
           relaySSR.getMiddleware()
         ])

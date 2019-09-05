@@ -29,7 +29,8 @@ export default {
         }),
         urlMiddleware({
           url: () =>
-            process.env.RELAY_ENDPOINT || 'https://rafaelbastiani.com/graphql'
+            process.env.RELAY_ENDPOINT_CLIENT ||
+            'https://rafaelbastiani.com/graphql'
         })
       ])
     });
