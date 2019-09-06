@@ -1,6 +1,6 @@
 import { commitMutation, graphql } from 'react-relay';
 
-import Environment from '../../../lib/createRelayEnvironment';
+import { createEnvironment } from '../../../lib/createEnvironment';
 
 const mutation = graphql`
   mutation PostAddMutation($input: PostAddInput!) {
@@ -19,17 +19,21 @@ const mutation = graphql`
   }
 `;
 
-const environment = Environment();
-
 function commit(
   input: object,
   onCompleted: (res: any) => void,
   onError: () => void
 ) {
+  // @ts-ignore
+  const { token, ...newInput } = input;
+
+  const environment = createEnvironment({
+    token
+  });
   return commitMutation(environment, {
     mutation,
     variables: {
-      input
+      input: { ...newInput }
     },
     onCompleted,
     onError

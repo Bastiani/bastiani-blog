@@ -11,6 +11,7 @@ import PostAddMutation from './mutations/PostAddMutation';
 
 const validationSchema = () =>
   yup.object().shape({
+    slug: yup.string().required('Slug is required!'),
     title: yup.string().required('Title is required!'),
     description: yup.string().required('Description is required!'),
     text: yup.string().required('Text is required!')
@@ -26,6 +27,7 @@ const Admin = (ctx: any) => {
     <AuthLayout>
       <Formik
         initialValues={{
+          slug: '',
           title: '',
           description: '',
           text: ''
@@ -55,6 +57,7 @@ const Admin = (ctx: any) => {
         render={({ handleSubmit }) => (
           <Form>
             <FormGroup>
+              <InputFormik label='Slug' name='slug' placeholder='Slug' />
               <InputFormik label='Title' name='title' placeholder='Title' />
               <InputFormik
                 label='Description'

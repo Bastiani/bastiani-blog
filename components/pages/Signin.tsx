@@ -47,15 +47,15 @@ const Signin = () => (
     render={({ handleSubmit }) => (
       <>
         <FormGroup>
-          <InputFormik label="Email" name="email" placeholder="Email" />
+          <InputFormik label='Email' name='email' placeholder='Email' />
           <InputFormik
-            type="password"
-            label="Password"
-            name="password"
-            placeholder="Password"
+            type='password'
+            label='Password'
+            name='password'
+            placeholder='Password'
           />
         </FormGroup>
-        <Button variant="success" onClick={handleSubmit}>
+        <Button variant='success' onClick={handleSubmit}>
           Login
         </Button>
       </>

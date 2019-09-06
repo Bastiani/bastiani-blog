@@ -1,6 +1,6 @@
 import { commitMutation, graphql } from 'react-relay';
 
-import Environment from '../../../lib/createRelayEnvironment';
+import { createEnvironment } from '../../../lib/createEnvironment';
 
 const mutation = graphql`
   mutation SigninMutation($input: UserLoginInput!) {
@@ -11,13 +11,19 @@ const mutation = graphql`
   }
 `;
 
-const environment = Environment();
-
 function commit(
   input: object,
   onCompleted: (res: any) => void,
   onError: () => void
 ) {
+  const environment = createEnvironment(
+    '',
+    JSON.stringify({
+      // @ts-ignore
+      queryID: undefined
+    })
+  );
+
   return commitMutation(environment, {
     mutation,
     variables: {

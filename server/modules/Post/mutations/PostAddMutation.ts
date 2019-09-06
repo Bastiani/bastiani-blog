@@ -10,6 +10,9 @@ import { PostConnection } from '../PostType';
 const mutation = mutationWithClientMutationId({
   name: 'PostAdd',
   inputFields: {
+    slug: {
+      type: GraphQLNonNull(GraphQLString)
+    },
     title: {
       type: GraphQLNonNull(GraphQLString)
     },
@@ -29,9 +32,10 @@ const mutation = mutationWithClientMutationId({
       throw new Error('Unauthorized user');
     }
 
-    const { title, description, text, active } = args;
+    const { slug, title, description, text, active } = args;
 
     const newPost = await new PostModel({
+      slug,
       title,
       description,
       text,
