@@ -23,7 +23,7 @@ const renderPostText = (text: string) => {
     tables: true,
     breaks: true
   });
-  const postArray = text.split('$');
+  const postArray = text.split('/$');
   return postArray.map((post, index) => {
     if (post.includes('code')) {
       return (
