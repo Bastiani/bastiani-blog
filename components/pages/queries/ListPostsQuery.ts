@@ -11,6 +11,7 @@ export const listPostsQuery = graphql`
       edges {
         node {
           id
+          image
           slug
           title
           description
