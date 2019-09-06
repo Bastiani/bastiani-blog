@@ -11,6 +11,7 @@ const mutation = graphql`
           id
           _id
           title
+          description
           text
         }
       }
