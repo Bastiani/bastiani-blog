@@ -13,6 +13,7 @@ import { nodeInterface, registerType } from '../../interface/Node';
 export interface IPost {
   id: string;
   _id: Types.ObjectId;
+  image: string;
   slug: string;
   title: string;
   description: string;
@@ -32,6 +33,10 @@ const PostType = registerType(
         type: GraphQLString,
         // tslint:disable-next-line:object-literal-sort-keys
         resolve: post => post._id
+      },
+      image: {
+        type: GraphQLString,
+        description: 'Image url'
       },
       slug: {
         type: GraphQLNonNull(GraphQLString),

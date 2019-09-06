@@ -19,6 +19,7 @@ export default class Post {
   public id: string;
   // tslint:disable-next-line:variable-name
   public _id: Types.ObjectId;
+  public image: string;
   public slug: string;
   public title: string;
   public description: string;
@@ -29,6 +30,7 @@ export default class Post {
   constructor(data: IPost) {
     this.id = data.id;
     this._id = data._id;
+    this.image = data.image;
     this.slug = data.slug;
     this.title = data.title;
     this.description = data.description;

@@ -4,6 +4,7 @@ const { ObjectId } = Schema.Types;
 
 type PostInterface = {
   description: string;
+  image: string;
   title: string;
   text: string;
   slug: string;
@@ -13,6 +14,9 @@ type PostInterface = {
 
 const PostSchema = new Schema<PostInterface>(
   {
+    image: {
+      type: String
+    },
     slug: {
       type: String,
       trim: true,

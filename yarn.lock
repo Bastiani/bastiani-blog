@@ -5146,6 +5146,10 @@ next-page-transitions@^1.0.0-beta.2:
     prop-types "^15.6.1"
     react-transition-group "^2.3.1"
 
+next-seo@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/next-seo/-/next-seo-2.0.0.tgz#478ea9ac5a6f7b331b58f9604a577bcccbd4ba43"
+
 next-server@9.0.2:
   version "9.0.2"
   resolved "https://registry.yarnpkg.com/next-server/-/next-server-9.0.2.tgz#8e119734c2492fd20faa7e487989b7d376d67d70"

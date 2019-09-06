@@ -35,6 +35,7 @@
     "next": "^9.0.2",
     "next-cookies": "^1.1.2",
     "next-page-transitions": "^1.0.0-beta.2",
+    "next-seo": "^2.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-highlight": "^0.12.0",

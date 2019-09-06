@@ -23,6 +23,10 @@ export default class MyDocument extends Document {
             href='https://fonts.googleapis.com/css?family=Open+Sans|Roboto&display=swap'
             rel='stylesheet'
           />
+          <meta
+            name='twitter:title'
+            content='Blog: Rafael Campos de Bastiani'
+          />
           {/*
           // @ts-ignore */}
           {this.props.styleTags}

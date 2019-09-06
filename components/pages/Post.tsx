@@ -1,5 +1,6 @@
 import Disqus from 'disqus-react';
 import marked from 'marked';
+import { NextSeo } from 'next-seo';
 import Highlight from 'react-highlight';
 import { fetchQuery, QueryRenderer } from 'react-relay';
 
@@ -84,6 +85,37 @@ const Post = (props: IProps) => {
 
           return (
             <>
+              <NextSeo
+                title={postBySlug.title}
+                description={postBySlug.description}
+                canonical='https://www.canonical.ie/'
+                openGraph={{
+                  url: window.location.href,
+                  title: 'Open Graph Title',
+                  description: 'Open Graph Description',
+                  images: [
+                    {
+                      url: postBySlug.image,
+                      width: 800,
+                      height: 600,
+                      alt: 'Og Image Alt'
+                    },
+                    {
+                      url: postBySlug.image,
+                      width: 900,
+                      height: 800,
+                      alt: 'Og Image Alt Second'
+                    },
+                    { url: postBySlug.image }
+                  ],
+                  site_name: 'Rafael Campos de Bastiani'
+                }}
+                twitter={{
+                  handle: '@handle',
+                  site: '@site',
+                  cardType: 'summary_large_image'
+                }}
+              />
               <PostDetails postBySlug={postBySlug} />
               <Disqus.DiscussionEmbed
                 shortname={disqusShortname}
