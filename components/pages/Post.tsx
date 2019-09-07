@@ -2,12 +2,9 @@ import Disqus from 'disqus-react';
 import marked from 'marked';
 import { BlogJsonLd, NextSeo } from 'next-seo';
 import Highlight from 'react-highlight';
-import { fetchQuery, QueryRenderer } from 'react-relay';
+import { fetchQuery } from 'react-relay';
 
-import {
-  createEnvironment,
-  initEnvironment
-} from '../../lib/createEnvironment';
+import { initEnvironment } from '../../lib/createEnvironment';
 import '../../static/css/vs2015.css';
 import { PostQueryResponse } from './queries/__generated__/PostQuery.graphql';
 import { postQuery } from './queries/PostQuery';
@@ -53,76 +50,56 @@ const PostDetails = ({ postBySlug }: any) => (
 );
 
 const Post = (props: IProps) => {
-  const { relayData, variables } = props;
-  const environment = createEnvironment(
-    relayData,
-    JSON.stringify({
-      // @ts-ignore
-      queryID: undefined,
-      variables
-    })
-  );
-  return process.browser ? (
-    <QueryRenderer
-      environment={environment}
-      // @ts-ignore
-      query={postQuery}
-      variables={variables}
-      render={({ error, props: queryProps }: any) => {
-        if (error) {
-          console.log(error.message);
-          return;
-        }
-        // @ts-ignore
-        else if (queryProps) {
-          const { postBySlug } = queryProps;
-          const disqusShortname = 'rafaelbastiani-com';
-          const disqusConfig = {
-            url: window.location.href,
-            identifier: postBySlug.id,
-            title: postBySlug.title
-          };
+  if (process.browser) {
+    const { relayData } = props;
 
-          return (
-            <>
-              <NextSeo
-                title={postBySlug.title}
-                description={postBySlug.description}
-                canonical='https://www.canonical.ie/'
-                openGraph={{
-                  url: window.location.href,
-                  title: postBySlug.title,
-                  description: postBySlug.description,
-                  images: [{ url: postBySlug.image }],
-                  site_name: 'Rafael Campos de Bastiani'
-                }}
-                twitter={{
-                  handle: '@RBastiani',
-                  site: '@RBastiani',
-                  cardType: 'summary_large_image'
-                }}
-              />
-              <BlogJsonLd
-                url='https://www.rafaelbastiani.com'
-                title='Rafael Campos de Bastiani'
-                images={[postBySlug.image]}
-                datePublished={postBySlug.createdAt}
-                dateModified={postBySlug.createdAt}
-                authorName='Rafael Campos de Bastiani'
-                description={postBySlug.description}
-              />
-              <PostDetails postBySlug={postBySlug} />
-              <Disqus.DiscussionEmbed
-                shortname={disqusShortname}
-                config={disqusConfig}
-              />
-            </>
-          );
-        }
-        return <div>Loading</div>;
-      }}
-    />
-  ) : null;
+    // @ts-ignore
+    const postBySlug = relayData[0][1].data.postBySlug;
+    const disqusShortname = 'rafaelbastiani-com';
+    const disqusConfig = {
+      url: process.browser ? window.location.href : '',
+      identifier: postBySlug.id,
+      title: postBySlug.title
+    };
+
+    return (
+      <>
+        <NextSeo
+          title={postBySlug.title}
+          description={postBySlug.description}
+          canonical='https://www.canonical.ie/'
+          openGraph={{
+            url: window.location.href,
+            title: postBySlug.title,
+            description: postBySlug.description,
+            images: [{ url: postBySlug.image }],
+            site_name: 'Rafael Campos de Bastiani'
+          }}
+          twitter={{
+            handle: '@RBastiani',
+            site: '@RBastiani',
+            cardType: 'summary_large_image'
+          }}
+        />
+        <BlogJsonLd
+          url='https://www.rafaelbastiani.com'
+          title='Rafael Campos de Bastiani'
+          images={[postBySlug.image]}
+          datePublished={postBySlug.createdAt}
+          dateModified={postBySlug.createdAt}
+          authorName='Rafael Campos de Bastiani'
+          description={postBySlug.description}
+        />
+        <PostDetails postBySlug={postBySlug} />
+        <Disqus.DiscussionEmbed
+          shortname={disqusShortname}
+          config={disqusConfig}
+        />
+      </>
+    );
+  } else {
+    return null;
+  }
 };
 
 Post.getInitialProps = async ({ query: queryParams }: any) => {
