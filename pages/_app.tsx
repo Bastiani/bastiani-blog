@@ -1,4 +1,5 @@
 import { PageTransition } from 'next-page-transitions';
+import { DefaultSeo } from 'next-seo';
 import App, { Container } from 'next/app';
 import Link from 'next/link';
 import React from 'react';
@@ -44,6 +45,19 @@ class MyApp extends App {
 
     return (
       <Container>
+        <DefaultSeo
+          openGraph={{
+            type: 'website',
+            locale: 'pt_BR',
+            url: 'https://www.rafaelbastiani.com/',
+            site_name: 'Rafael Campos de Bastiani'
+          }}
+          twitter={{
+            handle: '@RBastiani',
+            site: '@RBastiani',
+            cardType: 'summary_large_image'
+          }}
+        />
         <GlobalStyle />
         <PageTransition timeout={300} classNames='page-transition'>
           <ThemeProvider theme={themeLight}>

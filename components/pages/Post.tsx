@@ -91,28 +91,14 @@ const Post = (props: IProps) => {
                 canonical='https://www.canonical.ie/'
                 openGraph={{
                   url: window.location.href,
-                  title: 'Open Graph Title',
-                  description: 'Open Graph Description',
-                  images: [
-                    {
-                      url: postBySlug.image,
-                      width: 800,
-                      height: 600,
-                      alt: 'Og Image Alt'
-                    },
-                    {
-                      url: postBySlug.image,
-                      width: 900,
-                      height: 800,
-                      alt: 'Og Image Alt Second'
-                    },
-                    { url: postBySlug.image }
-                  ],
+                  title: postBySlug.title,
+                  description: postBySlug.description,
+                  images: [{ url: postBySlug.image }],
                   site_name: 'Rafael Campos de Bastiani'
                 }}
                 twitter={{
-                  handle: '@handle',
-                  site: '@site',
+                  handle: '@RBastiani',
+                  site: '@RBastiani',
                   cardType: 'summary_large_image'
                 }}
               />
