@@ -1,6 +1,6 @@
 import Disqus from 'disqus-react';
 import marked from 'marked';
-import { NextSeo } from 'next-seo';
+import { BlogJsonLd, NextSeo } from 'next-seo';
 import Highlight from 'react-highlight';
 import { fetchQuery, QueryRenderer } from 'react-relay';
 
@@ -101,6 +101,15 @@ const Post = (props: IProps) => {
                   site: '@RBastiani',
                   cardType: 'summary_large_image'
                 }}
+              />
+              <BlogJsonLd
+                url='https://www.rafaelbastiani.com'
+                title='Rafael Campos de Bastiani'
+                images={[postBySlug.image]}
+                datePublished={postBySlug.createdAt}
+                dateModified={postBySlug.createdAt}
+                authorName='Rafael Campos de Bastiani'
+                description={postBySlug.description}
               />
               <PostDetails postBySlug={postBySlug} />
               <Disqus.DiscussionEmbed

@@ -9,6 +9,7 @@ export const postQuery = graphql`
       title
       description
       text
+      createdAt
     }
   }
 `;
