@@ -31,7 +31,9 @@ export default {
           url: () => ''
         }),
         next => async req => {
-          req.fetchOpts.headers.Authorization = relayData.token;
+          req.fetchOpts.headers.Authorization = relayData
+            ? relayData.token
+            : '';
           const res = await next(req);
           return res;
         }

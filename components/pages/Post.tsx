@@ -50,56 +50,52 @@ const PostDetails = ({ postBySlug }: any) => (
 );
 
 const Post = (props: IProps) => {
-  if (process.browser) {
-    const { relayData } = props;
+  const { relayData } = props;
 
-    // @ts-ignore
-    const postBySlug = relayData[0][1].data.postBySlug;
-    const disqusShortname = 'rafaelbastiani-com';
-    const disqusConfig = {
-      url: process.browser ? window.location.href : '',
-      identifier: postBySlug.id,
-      title: postBySlug.title
-    };
+  // @ts-ignore
+  const postBySlug = relayData[0][1].data.postBySlug;
+  const disqusShortname = 'rafaelbastiani-com';
+  const disqusConfig = {
+    url: process.browser ? window.location.href : '',
+    identifier: postBySlug.id,
+    title: postBySlug.title
+  };
 
-    return (
-      <>
-        <NextSeo
-          title={postBySlug.title}
-          description={postBySlug.description}
-          canonical='https://www.canonical.ie/'
-          openGraph={{
-            url: window.location.href,
-            title: postBySlug.title,
-            description: postBySlug.description,
-            images: [{ url: postBySlug.image }],
-            site_name: 'Rafael Campos de Bastiani'
-          }}
-          twitter={{
-            handle: '@RBastiani',
-            site: '@RBastiani',
-            cardType: 'summary_large_image'
-          }}
-        />
-        <BlogJsonLd
-          url='https://www.rafaelbastiani.com'
-          title='Rafael Campos de Bastiani'
-          images={[postBySlug.image]}
-          datePublished={postBySlug.createdAt}
-          dateModified={postBySlug.createdAt}
-          authorName='Rafael Campos de Bastiani'
-          description={postBySlug.description}
-        />
-        <PostDetails postBySlug={postBySlug} />
-        <Disqus.DiscussionEmbed
-          shortname={disqusShortname}
-          config={disqusConfig}
-        />
-      </>
-    );
-  } else {
-    return null;
-  }
+  return (
+    <>
+      <NextSeo
+        title={postBySlug.title}
+        description={postBySlug.description}
+        canonical='https://www.canonical.ie/'
+        openGraph={{
+          url: process.browser ? window.location.href : '',
+          title: postBySlug.title,
+          description: postBySlug.description,
+          images: [{ url: postBySlug.image }],
+          site_name: 'Rafael Campos de Bastiani'
+        }}
+        twitter={{
+          handle: '@RBastiani',
+          site: '@RBastiani',
+          cardType: 'summary_large_image'
+        }}
+      />
+      <BlogJsonLd
+        url='https://www.rafaelbastiani.com'
+        title='Rafael Campos de Bastiani'
+        images={[postBySlug.image]}
+        datePublished={postBySlug.createdAt}
+        dateModified={postBySlug.createdAt}
+        authorName='Rafael Campos de Bastiani'
+        description={postBySlug.description}
+      />
+      <PostDetails postBySlug={postBySlug} />
+      <Disqus.DiscussionEmbed
+        shortname={disqusShortname}
+        config={disqusConfig}
+      />
+    </>
+  );
 };
 
 Post.getInitialProps = async ({ query: queryParams }: any) => {
