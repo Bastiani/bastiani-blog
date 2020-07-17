@@ -29,7 +29,7 @@
     "koa-graphql": "^0.8.0",
     "koa-router": "^7.4.0",
     "koa-static": "^5.0.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "marked": "^0.7.0",
     "mongoose": "^5.6.7",
     "next": "^9.0.2",
